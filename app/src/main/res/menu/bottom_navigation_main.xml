@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_favorites"
+        android:enabled="true"
+        android:icon="@drawable/ic_favorite_white_24dp"
+        android:title="@string/text_mapa"
+        android:showAsAction="ifRoom"/>
+s
+    <item
+        android:id="@+id/action_schedules"
+        android:enabled="true"
+        android:icon="@drawable/ic_update_white_24dp"
+        android:title="@string/text_consultas"
+        android:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_music"
+        android:enabled="true"
+        android:icon="@drawable/ic_local_dining_white_24dp"
+        android:title="@string/text_perfil"
+        android:showAsAction="ifRoom"/>
+
+</menu>
