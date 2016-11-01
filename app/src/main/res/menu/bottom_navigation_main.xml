@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_favorites"
+        android:id="@+id/action_map"
         android:enabled="true"
-        android:icon="@drawable/ic_favorite_white_24dp"
+        android:icon="@drawable/ic_map_white_24dp"
         android:title="@string/text_mapa"
         android:showAsAction="ifRoom"/>
 s
     <item
         android:id="@+id/action_schedules"
         android:enabled="true"
-        android:icon="@drawable/ic_update_white_24dp"
+        android:icon="@drawable/ic_assignment_white_24dp"
         android:title="@string/text_consultas"
         android:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_music"
         android:enabled="true"
-        android:icon="@drawable/ic_local_dining_white_24dp"
+        android:icon="@drawable/ic_account_box_white_24dp"
         android:title="@string/text_perfil"
         android:showAsAction="ifRoom"/>
 
