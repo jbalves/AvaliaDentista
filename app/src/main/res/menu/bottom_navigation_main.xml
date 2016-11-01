@@ -10,14 +10,14 @@
         android:showAsAction="ifRoom"/>
 s
     <item
-        android:id="@+id/action_schedules"
+        android:id="@+id/action_consultas"
         android:enabled="true"
         android:icon="@drawable/ic_assignment_white_24dp"
         android:title="@string/text_consultas"
         android:showAsAction="ifRoom"/>
 
     <item
-        android:id="@+id/action_music"
+        android:id="@+id/action_perfil"
         android:enabled="true"
         android:icon="@drawable/ic_account_box_white_24dp"
         android:title="@string/text_perfil"
