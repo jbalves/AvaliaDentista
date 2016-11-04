@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import barros.jeferson.avaliadentista.fragments.ConsultasFragment;
@@ -14,7 +15,7 @@ import barros.jeferson.avaliadentista.fragments.MapFragment;
 import barros.jeferson.avaliadentista.fragments.PerfilFragment;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
 
     Fragment fragmentMap = new MapFragment();
     Fragment fragmentConsultas = new ConsultasFragment();
@@ -29,8 +30,7 @@ public class MainActivity extends FragmentActivity {
         addFragment(fragmentMap);
 
         setBottomNavigation();
-        //getSupportActionBar().hide();
-
+        getSupportActionBar().hide();
     }
 
 
