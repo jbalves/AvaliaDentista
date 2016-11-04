@@ -1,37 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/layout_main">
 
-    <TextView
-        android:id="@+id/text_mapa"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/text_mapa" />
-
-    <TextView
-        android:id="@+id/text_consultas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/text_consultas"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/text_perfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/text_perfil"
-        android:visibility="gone" />
-
-    <fragment android:name="barros.jeferson.avaliadentista.fragments.MinhasConsultasFragment"
-        android:id="@+id/listConsultas"
+    <LinearLayout
+        android:id="@+id/layout_fragments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content" />
+        android:gravity="center"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -43,4 +32,7 @@
         app:itemTextColor="@color/white"
         app:menu="@menu/bottom_navigation_main" />
 
-</RelativeLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

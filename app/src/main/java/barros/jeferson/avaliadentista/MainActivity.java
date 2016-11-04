@@ -1,46 +1,51 @@
 package barros.jeferson.avaliadentista;
 
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
-import barros.jeferson.avaliadentista.fragments.MinhasConsultasFragment;
+import barros.jeferson.avaliadentista.fragments.ConsultasFragment;
+import barros.jeferson.avaliadentista.fragments.MapFragment;
+import barros.jeferson.avaliadentista.fragments.PerfilFragment;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
 
-    private TextView textMapa;
-    private TextView textConsultas;
-    private TextView textPerfil;
+    Fragment fragmentMap = new MapFragment();
+    Fragment fragmentConsultas = new ConsultasFragment();
+    Fragment fragmentPerfil = new PerfilFragment();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
-        setContentView(R.layout.activity_unidades_saude);
+        setContentView(R.layout.activity_main);
 
+        addFragment(fragmentMap);
 
-        //setBottomNavigation();
+        setBottomNavigation();
         //getSupportActionBar().hide();
 
     }
 
-    private void setBottomNavigation() {
+    private void addFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        textMapa = (TextView) findViewById(R.id.text_mapa);
-        textConsultas = (TextView) findViewById(R.id.text_consultas);
-        textPerfil = (TextView) findViewById(R.id.text_perfil);
+        transaction.add(R.id.layout_fragments, fragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
+
+    private void setBottomNavigation() {
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
-
-
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -48,39 +53,15 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.action_map:
-                                textMapa.setVisibility(View.VISIBLE);
-                                textConsultas.setVisibility(View.GONE);
-                                textPerfil.setVisibility(View.GONE);
+                                replaceFragment(fragmentMap);
                                 break;
+
                             case R.id.action_consultas:
-                                /*
-                                textMapa.setVisibility(View.GONE);
-                                textConsultas.setVisibility(View.VISIBLE);
-                                textPerfil.setVisibility(View.GONE);
-                                */
-
-                                //fragment
-                                /*
-                                FragmentManager fragmentManager = getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-                                MinhasConsultasFragment fragment = new MinhasConsultasFragment();
-                                fragmentTransaction.add(R.id.listConsultas,fragment);
-                                fragmentTransaction.commit();
-                                */
-
-                                Bundle arguments = new Bundle();
-                                MinhasConsultasFragment minhasConsultasFragment = new MinhasConsultasFragment();
-                                minhasConsultasFragment.setArguments(arguments);
-                                getSupportFragmentManager().beginTransaction()
-                                        .replace(R.id.listConsultas, minhasConsultasFragment)
-                                        .commit();
-
+                                replaceFragment(fragmentConsultas);
                                 break;
+
                             case R.id.action_perfil:
-                                textMapa.setVisibility(View.GONE);
-                                textConsultas.setVisibility(View.GONE);
-                                textPerfil.setVisibility(View.VISIBLE);
+                                replaceFragment(fragmentPerfil);
                                 break;
                         }
                         return false;
@@ -89,5 +70,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void replaceFragment(Fragment fragment) {
+
+        FragmentTransaction  transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.layout_fragments, fragment);
+        //transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
 }
