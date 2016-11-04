@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     private void setBottomNavigation() {
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
