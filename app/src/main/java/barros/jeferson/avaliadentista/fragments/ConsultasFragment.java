@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import barros.jeferson.avaliadentista.R;
 
@@ -14,10 +15,18 @@ import barros.jeferson.avaliadentista.R;
  */
 
 public class ConsultasFragment extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_consultas,container, false);
-        return view;
+        return inflater.inflate(R.layout.fragment_consultas,container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //TextView textView = (TextView)view.findViewById(R.id.tvTeste);
+
     }
 }

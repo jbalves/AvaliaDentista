@@ -33,14 +33,7 @@ public class MainActivity extends FragmentActivity {
 
     }
 
-    private void addFragment(Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        transaction.add(R.id.layout_fragments, fragment);
-        transaction.addToBackStack(null);
-
-        transaction.commit();
-    }
 
     private void setBottomNavigation() {
 
@@ -68,6 +61,15 @@ public class MainActivity extends FragmentActivity {
                     }
                 });
 
+    }
+
+    private void addFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.add(R.id.layout_fragments, fragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
     }
 
     private void replaceFragment(Fragment fragment) {

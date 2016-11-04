@@ -8,15 +8,39 @@ import java.io.Serializable;
 
 public class UnidadeSaude implements Serializable {
     public String nome;
-    public String endereco;
+    public String dataAtendimento;
+    public int diasEspera;
+    public Float rating;
 
-    public UnidadeSaude(String nome, String endereco) {
-        this.nome = nome;
-        this.endereco = endereco;
+    public String getNome() {
+        return nome;
     }
 
-    @Override
-    public String toString() {
-        return nome;
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDataAtendimento() {
+        return dataAtendimento;
+    }
+
+    public void setDataAtendimento(String dataAtendimento) {
+        this.dataAtendimento = dataAtendimento;
+    }
+
+    public int getDiasEspera() {
+        return diasEspera;
+    }
+
+    public void setDiasEspera(int diasEspera) {
+        this.diasEspera = diasEspera;
+    }
+
+    public Float getRating() {
+        return rating;
+    }
+
+    public void setRating(Float rating) {
+        this.rating = rating;
     }
 }
