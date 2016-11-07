@@ -17,6 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".CadastroConsultaActivity" android:label="Cadastrar Agendamento" android:parentActivityName=".CadastroConsultaActivity"/>
     </application>
 
 </manifest>

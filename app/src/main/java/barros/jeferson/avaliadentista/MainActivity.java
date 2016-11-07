@@ -1,5 +1,6 @@
 package barros.jeferson.avaliadentista;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -9,6 +10,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 
 import barros.jeferson.avaliadentista.fragments.ConsultasFragment;
 import barros.jeferson.avaliadentista.fragments.MapFragment;
@@ -72,12 +74,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void replaceFragment(Fragment fragment) {
-
         FragmentTransaction  transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.layout_fragments, fragment);
         //transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public void addConsulta(View view){
+        Intent intent = new Intent(this, CadastroConsultaActivity.class);
+        startActivity(intent);
     }
 
 }
