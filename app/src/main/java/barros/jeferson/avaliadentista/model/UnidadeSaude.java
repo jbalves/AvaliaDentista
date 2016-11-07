@@ -12,6 +12,13 @@ public class UnidadeSaude implements Serializable {
     public int diasEspera;
     public Float rating;
 
+    public UnidadeSaude(String nome, String dataAtendimento, int diasEspera, Float rating) {
+        this.nome = nome;
+        this.dataAtendimento = dataAtendimento;
+        this.diasEspera = diasEspera;
+        this.rating = rating;
+    }
+
     public String getNome() {
         return nome;
     }

@@ -36,6 +36,20 @@ public class ConsultasFragment extends Fragment {
 
         //TextView textView = (TextView)view.findViewById(R.id.tvTeste);
 
+        UnidadeSaude unidadeSaude1 = new UnidadeSaude("UBS Morro da Liberdade", "06/11/2016", 20, (float)2.0);
+        UnidadeSaude unidadeSaude2 = new UnidadeSaude("UBS Betânia", "01/10/2016", 10, (float)3.0);
+        UnidadeSaude unidadeSaude3 = new UnidadeSaude("nome", "dataAtendimento", 10, (float)3.0);
+        UnidadeSaude unidadeSaude4 = new UnidadeSaude("nome", "dataAtendimento", 10, (float)3.0);
+        UnidadeSaude unidadeSaude5 = new UnidadeSaude("nome", "dataAtendimento", 10, (float)3.0);
+        UnidadeSaude unidadeSaude6 = new UnidadeSaude("nome", "dataAtendimento", 10, (float)3.0);
+
+        mlista.add(unidadeSaude1);
+        mlista.add(unidadeSaude2);
+        mlista.add(unidadeSaude3);
+        mlista.add(unidadeSaude4);
+        mlista.add(unidadeSaude5);
+        mlista.add(unidadeSaude6);
+
         criarAdapter(view, mlista);
 
     }
