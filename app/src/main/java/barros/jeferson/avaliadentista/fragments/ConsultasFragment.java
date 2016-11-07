@@ -1,18 +1,26 @@
 package barros.jeferson.avaliadentista.fragments;
 
-import android.content.Intent;
+import android.content.ClipData;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.gson.Gson;
+import com.oceanbrasil.libocean.Ocean;
+import com.oceanbrasil.libocean.control.http.Request;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-import barros.jeferson.avaliadentista.CadastroConsultaActivity;
 import barros.jeferson.avaliadentista.R;
 import barros.jeferson.avaliadentista.adapter.MyAdapter;
 import barros.jeferson.avaliadentista.model.UnidadeSaude;
@@ -21,9 +29,9 @@ import barros.jeferson.avaliadentista.model.UnidadeSaude;
  * Created by Jeferson Barros <im.jbalves@gmail.com> on 11/4/16.
  */
 
-public class ConsultasFragment extends Fragment {
+public class ConsultasFragment extends Fragment implements Request.RequestListener {
 
-    private ArrayList<UnidadeSaude> mlista = new ArrayList<>();
+    private ArrayList<UnidadeSaude> mLista = new ArrayList<>();
 
     @Nullable
     @Override
@@ -36,24 +44,54 @@ public class ConsultasFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //TextView textView = (TextView)view.findViewById(R.id.tvTeste);
+        //Ocean
+        //        .newRequest("http://mobile-aceite.tcu.gov.br:80/mapa-da-saude/rest/estabelecimentos?categoria=POSTO%20DE%20SA%C3%9ADE&quantidade=30\n",this).get().send();
 
-        UnidadeSaude unidadeSaude1 = new UnidadeSaude("UBS Morro da Liberdade", "06/11/2016", 20, (float)2.0);
-        UnidadeSaude unidadeSaude2 = new UnidadeSaude("UBS Betânia", "01/10/2016", 10, (float)3.0);
-        UnidadeSaude unidadeSaude3 = new UnidadeSaude("nome", "dataAtendimento", 10, (float)3.0);
-        UnidadeSaude unidadeSaude4 = new UnidadeSaude("nome", "dataAtendimento", 10, (float)3.0);
-        UnidadeSaude unidadeSaude5 = new UnidadeSaude("nome", "dataAtendimento", 10, (float)3.0);
-        UnidadeSaude unidadeSaude6 = new UnidadeSaude("nome", "dataAtendimento", 10, (float)3.0);
+        Ocean.newRequest("https://www.udacity.com/public-api/v0/courses", this).get().send();
 
-        mlista.add(unidadeSaude1);
-        mlista.add(unidadeSaude2);
-        mlista.add(unidadeSaude3);
-        mlista.add(unidadeSaude4);
-        mlista.add(unidadeSaude5);
-        mlista.add(unidadeSaude6);
+        Log.d("Jeferson","Tamanho da lista [antes]: "+mLista.size());
+        criarAdapter(view, mLista);
+        Log.d("Jeferson","Tamanho da lista [depois]: "+mLista.size());
 
-        criarAdapter(view, mlista);
+    }
 
+    @Override
+    public void onRequestOk(String resposta, JSONObject jsonObject, int code) {
+         if (code == Request.NENHUM_ERROR) {
+             stringToJson(resposta);
+         }
+        Log.d("Jeferson","Entrou no onRequestOk");
+    }
+
+    public void stringToJson (String resposta) {
+        Log.d("Jeferson","Entrou no stringToJson");
+        ArrayList<UnidadeSaude> lista = new ArrayList<>();
+
+        if (resposta !=null) {
+            Log.d("Jeferson","resposta != null ");
+            try {
+                JSONObject object = new JSONObject(resposta);
+                JSONArray courses = object.getJSONArray("courses");
+                //JSONArray unidades = new JSONArray(object);
+
+                for (int i = 0; i < courses.length(); i++) {
+                    JSONObject unidade = courses.getJSONObject(i);
+                    String nomeFantasia = unidade.getString("subtitle");
+
+                    UnidadeSaude unidadeSaude = new UnidadeSaude();
+                    unidadeSaude.setNome(nomeFantasia);
+                    unidadeSaude.setDataAtendimento("07/11/2016");
+                    unidadeSaude.setDiasEspera(10);
+                    unidadeSaude.setRating((float)3.0);
+
+                    mLista.add(unidadeSaude);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.d("Jeferson","problema exception");
+            }
+        }
     }
 
     private void criarAdapter(View view, ArrayList<UnidadeSaude> lista) {
@@ -62,5 +100,4 @@ public class ConsultasFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
-
 }

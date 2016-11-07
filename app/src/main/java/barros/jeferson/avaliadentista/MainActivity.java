@@ -12,9 +12,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.oceanbrasil.libocean.Ocean;
+import com.oceanbrasil.libocean.control.http.Request;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import barros.jeferson.avaliadentista.fragments.ConsultasFragment;
 import barros.jeferson.avaliadentista.fragments.MapFragment;
 import barros.jeferson.avaliadentista.fragments.PerfilFragment;
+import barros.jeferson.avaliadentista.model.UnidadeSaude;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -85,5 +93,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CadastroConsultaActivity.class);
         startActivity(intent);
     }
-
 }
