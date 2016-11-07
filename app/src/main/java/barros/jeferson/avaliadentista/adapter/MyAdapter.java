@@ -22,19 +22,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private final Context context;
     private ArrayList<UnidadeSaude> lista;
 
-    private AdapterListener mAdapterListener;
 
     public MyAdapter (Context context, ArrayList<UnidadeSaude> lista) {
         this.lista = lista;
         this.context = context;
-    }
-
-    public AdapterListener getmAdapterListener() {
-        return mAdapterListener;
-    }
-
-    public void setmAdapterListener(AdapterListener mAdapterListener) {
-        this.mAdapterListener = mAdapterListener;
     }
 
     //#2 monta o layout da lista
@@ -66,7 +57,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     //#1 método a ser implementado
     //mapeia os elementos de layout
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView nomeUnidadeView;
         private TextView dataAtendimentoView;
@@ -82,9 +73,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             dataAtendimentoView = (TextView) itemView.findViewById(R.id.dataAtendimento);
             diasEsperaView = (TextView) itemView.findViewById(R.id.diasEspera);
             ratingBarView = (RatingBar) itemView.findViewById(R.id.ratingBar);
-
-            //Simula o click
-            itemView.setOnClickListener(this);
 
         }
 
@@ -113,18 +101,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             return this;
         }
 
-        @Override
-        public void onClick(View view) {
-            int position = getPosition();
-
-            if (mAdapterListener != null) {
-                mAdapterListener.onItemClick(view, position);
-            }
-        }
-    }
-
-    public interface AdapterListener {
-        public void onItemClick (View view, int position);
     }
 
 }
