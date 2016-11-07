@@ -45,9 +45,11 @@ public class ConsultasFragment extends Fragment implements Request.RequestListen
         super.onViewCreated(view, savedInstanceState);
 
         //Ocean
-        //        .newRequest("http://mobile-aceite.tcu.gov.br:80/mapa-da-saude/rest/estabelecimentos?categoria=POSTO%20DE%20SA%C3%9ADE&quantidade=30\n",this).get().send();
+         //       .newRequest("http://mobile-aceite.tcu.gov.br:80/mapa-da-saude/rest/estabelecimentos?categoria=POSTO%20DE%20SA%C3%9ADE&quantidade=3",this).get().send();
 
-        Ocean.newRequest("https://www.udacity.com/public-api/v0/courses", this).get().send();
+        //Ocean.newRequest("https://www.udacity.com/public-api/v0/courses", this).get().send();
+
+        Ocean.newRequest("https://gitlab.com/snippets/30874/raw",this).get().send();
 
         Log.d("Jeferson","Tamanho da lista [antes]: "+mLista.size());
         criarAdapter(view, mLista);
@@ -70,13 +72,15 @@ public class ConsultasFragment extends Fragment implements Request.RequestListen
         if (resposta !=null) {
             Log.d("Jeferson","resposta != null ");
             try {
-                JSONObject object = new JSONObject(resposta);
-                JSONArray courses = object.getJSONArray("courses");
-                //JSONArray unidades = new JSONArray(object);
 
-                for (int i = 0; i < courses.length(); i++) {
-                    JSONObject unidade = courses.getJSONObject(i);
-                    String nomeFantasia = unidade.getString("subtitle");
+                //JSONObject object = new JSONObject(resposta);
+                //JSONArray unidades = object.getJSONArray("");
+
+                JSONArray unidades = new JSONArray(resposta);
+
+                for (int i = 0; i < unidades.length(); i++) {
+                    JSONObject unidade = unidades.getJSONObject(i);
+                    String nomeFantasia = unidade.getString("nomeFantasia");
 
                     UnidadeSaude unidadeSaude = new UnidadeSaude();
                     unidadeSaude.setNome(nomeFantasia);
