@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -31,11 +32,15 @@ import barros.jeferson.avaliadentista.model.UnidadeSaude;
 
 public class ConsultasFragment extends Fragment implements Request.RequestListener {
 
+    View mView;
+
     private ArrayList<UnidadeSaude> mLista = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.consultas_fragment);
         return inflater.inflate(R.layout.fragment_consultas,container, false);
     }
 
@@ -44,23 +49,24 @@ public class ConsultasFragment extends Fragment implements Request.RequestListen
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mView = view;
+
         //Ocean
-         //       .newRequest("http://mobile-aceite.tcu.gov.br:80/mapa-da-saude/rest/estabelecimentos?categoria=POSTO%20DE%20SA%C3%9ADE&quantidade=3",this).get().send();
+        //        .newRequest("http://mobile-aceite.tcu.gov.br:80/mapa-da-saude/rest/estabelecimentos",this).get().send();
+
+        Ocean
+                .newRequest("http://mobile-aceite.tcu.gov.br:80/mapa-da-saude/rest/estabelecimentos?categoria=POSTO DE SAÚDE&quantidade=30",this).get().send();
 
         //Ocean.newRequest("https://www.udacity.com/public-api/v0/courses", this).get().send();
 
-        Ocean.newRequest("https://gitlab.com/snippets/30874/raw",this).get().send();
-
-        Log.d("Jeferson","Tamanho da lista [antes]: "+mLista.size());
-        criarAdapter(view, mLista);
-        Log.d("Jeferson","Tamanho da lista [depois]: "+mLista.size());
-
+        //Ocean.newRequest("https://gitlab.com/snippets/30874/raw",this).get().send();
     }
 
     @Override
     public void onRequestOk(String resposta, JSONObject jsonObject, int code) {
          if (code == Request.NENHUM_ERROR) {
              stringToJson(resposta);
+             criarAdapter(mView, mLista);
          }
         Log.d("Jeferson","Entrou no onRequestOk");
     }
@@ -69,7 +75,7 @@ public class ConsultasFragment extends Fragment implements Request.RequestListen
         Log.d("Jeferson","Entrou no stringToJson");
         ArrayList<UnidadeSaude> lista = new ArrayList<>();
 
-        if (resposta !=null) {
+        if (resposta != null) {
             Log.d("Jeferson","resposta != null ");
             try {
 

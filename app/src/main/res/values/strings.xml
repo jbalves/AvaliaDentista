@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Avalia Dentista</string>
+    <string name="consultas_fragment">Histórico de Agendamentos</string>
     <string name="text_mapa">Mapa</string>
-    <string name="text_consultas">Minhas Consultas</string>
+    <string name="text_consultas">Agendamentos</string>
     <string name="text_perfil">Perfil</string>
 </resources>

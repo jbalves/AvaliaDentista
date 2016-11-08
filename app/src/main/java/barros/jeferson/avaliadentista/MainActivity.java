@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         addFragment(fragmentMap);
 
         setBottomNavigation();
-        getSupportActionBar().hide();
     }
 
 

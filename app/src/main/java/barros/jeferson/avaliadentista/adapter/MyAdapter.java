@@ -90,7 +90,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         public ViewHolder setDiasEspera(int diasEspera) {
             if (diasEsperaView == null) return this;
-            diasEsperaView.setText(diasEspera+"");
+            diasEsperaView.setText(diasEspera+" dias de espera");
             return this;
         }
 

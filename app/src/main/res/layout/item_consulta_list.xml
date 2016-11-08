@@ -27,20 +27,21 @@
                 android:text="UBS Morro da Liberdade"
                 android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/dataAtendimento"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="04/11/2016"
-                android:textStyle="bold"
-                android:layout_alignParentRight="true"/>
 
             <TextView
                 android:id="@+id/diasEspera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="10 dias de despera"
-                android:layout_below="@id/dataAtendimento"/>
+                android:layout_below="@id/nomeUnidade"/>
+
+            <TextView
+                android:id="@+id/dataAtendimento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="04/11/2016"
+                android:textStyle="bold"
+                android:layout_below="@id/diasEspera"/>
 
             <RatingBar
                 android:id="@+id/ratingBar"
@@ -51,7 +52,8 @@
                 android:numStars="5"
                 android:rating="3.0"
                 android:stepSize="1.0"
-                android:layout_below="@id/dataAtendimento"/>
+                android:layout_alignRight="@id/diasEspera"
+                android:layout_below="@id/nomeUnidade"/>
 
         </RelativeLayout>
 
