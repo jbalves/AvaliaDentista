@@ -4,4 +4,5 @@
     <string name="text_mapa">Mapa</string>
     <string name="text_consultas">Agendamentos</string>
     <string name="text_perfil">Perfil</string>
+    <string name="pick_date">DATA DO AGENDAMENTO</string>
 </resources>

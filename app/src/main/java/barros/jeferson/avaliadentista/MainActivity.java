@@ -1,6 +1,9 @@
 package barros.jeferson.avaliadentista;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +14,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 
 import com.oceanbrasil.libocean.Ocean;
 import com.oceanbrasil.libocean.control.http.Request;
@@ -18,6 +23,7 @@ import com.oceanbrasil.libocean.control.http.Request;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import barros.jeferson.avaliadentista.fragments.ConsultasFragment;
 import barros.jeferson.avaliadentista.fragments.MapFragment;
@@ -25,12 +31,11 @@ import barros.jeferson.avaliadentista.fragments.PerfilFragment;
 import barros.jeferson.avaliadentista.model.UnidadeSaude;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     Fragment fragmentMap = new MapFragment();
     Fragment fragmentConsultas = new ConsultasFragment();
     Fragment fragmentPerfil = new PerfilFragment();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,4 +97,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CadastroConsultaActivity.class);
         startActivity(intent);
     }
+
 }

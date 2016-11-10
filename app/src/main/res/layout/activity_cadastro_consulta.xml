@@ -10,24 +10,49 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:id="@+id/addAgendamento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="DATA DO AGENDAMENTO"/>
+            android:text="@string/pick_date"
+            android:onClick="showDatePickerDialogAgendamento"/>
+
+        <TextView
+            android:id="@+id/dataAgendamentoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="DATA DA CONSULTA"/>
+            android:layout_marginTop="10dp"
+            android:text="DATA DA CONSULTA"
+            android:onClick="showDatePickerDialogConsulta"/>
+
+        <TextView
+            android:id="@+id/dataConsultaText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="DATA DO RETORNO"/>
+            android:layout_marginTop="10dp"
+            android:text="DATA DO RETORNO"
+            android:onClick="showDatePickerDialogRetorno"/>
+
+        <TextView
+            android:id="@+id/dataRetornoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"/>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
             <RatingBar
                 android:id="@+id/ratingBar"
@@ -35,9 +60,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:numStars="5"
-                android:rating="4.0"
                 android:stepSize="1.0"
+                android:isIndicator="true"
+                android:focusable="false"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -51,11 +76,11 @@
     </LinearLayout>
 
     <Button
-        android:background="@android:color/holo_blue_dark"
+        android:background="@color/accent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="SALVAR"
-        android:textColor="@color/white"
+        android:textColor="@android:color/white"
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
