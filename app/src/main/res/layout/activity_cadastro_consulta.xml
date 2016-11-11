@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
         <Button
             android:id="@+id/addAgendamento"
             android:layout_width="match_parent"
@@ -55,15 +56,11 @@
             android:layout_marginTop="10dp">
 
             <RatingBar
-                android:id="@+id/ratingBar"
-                style="?android:attr/ratingBarStyleIndicator"
+                style="?android:attr/ratingBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:stepSize="1.0"
-                android:isIndicator="true"
-                android:focusable="false"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:stepSize="1.0"/>
 
             <TextView
                 android:layout_width="match_parent"

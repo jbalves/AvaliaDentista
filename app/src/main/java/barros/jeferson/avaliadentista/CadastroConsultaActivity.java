@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import barros.jeferson.avaliadentista.fragments.DatePickerFragmentAgendamento;
 import barros.jeferson.avaliadentista.fragments.DatePickerFragmentConsulta;
@@ -21,9 +22,6 @@ public class CadastroConsultaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_consulta);
-
-        RatingBar simpleRatingBar = (RatingBar) findViewById(R.id.ratingBar);
-        Float ratingNumber = simpleRatingBar.getRating();
     }
 
     public void showDatePickerDialogAgendamento(View view) {
@@ -40,4 +38,5 @@ public class CadastroConsultaActivity extends AppCompatActivity {
         DialogFragment newFragment = new DatePickerFragmentRetorno();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
+
 }

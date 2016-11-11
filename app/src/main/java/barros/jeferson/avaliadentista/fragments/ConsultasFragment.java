@@ -32,7 +32,7 @@ import barros.jeferson.avaliadentista.model.UnidadeSaude;
 
 public class ConsultasFragment extends Fragment implements Request.RequestListener {
 
-    View mView;
+    private View mView;
 
     private ArrayList<UnidadeSaude> mLista = new ArrayList<>();
 
@@ -51,15 +51,8 @@ public class ConsultasFragment extends Fragment implements Request.RequestListen
 
         mView = view;
 
-        //Ocean
-        //        .newRequest("http://mobile-aceite.tcu.gov.br:80/mapa-da-saude/rest/estabelecimentos",this).get().send();
-
         Ocean
                 .newRequest("http://mobile-aceite.tcu.gov.br:80/mapa-da-saude/rest/estabelecimentos?categoria=POSTO DE SAÚDE&quantidade=30",this).get().send();
-
-        //Ocean.newRequest("https://www.udacity.com/public-api/v0/courses", this).get().send();
-
-        //Ocean.newRequest("https://gitlab.com/snippets/30874/raw",this).get().send();
     }
 
     @Override
@@ -68,19 +61,13 @@ public class ConsultasFragment extends Fragment implements Request.RequestListen
              stringToJson(resposta);
              criarAdapter(mView, mLista);
          }
-        Log.d("Jeferson","Entrou no onRequestOk");
     }
 
     public void stringToJson (String resposta) {
-        Log.d("Jeferson","Entrou no stringToJson");
         ArrayList<UnidadeSaude> lista = new ArrayList<>();
 
         if (resposta != null) {
-            Log.d("Jeferson","resposta != null ");
             try {
-
-                //JSONObject object = new JSONObject(resposta);
-                //JSONArray unidades = object.getJSONArray("");
 
                 JSONArray unidades = new JSONArray(resposta);
 
@@ -99,7 +86,6 @@ public class ConsultasFragment extends Fragment implements Request.RequestListen
 
             } catch (JSONException e) {
                 e.printStackTrace();
-                Log.d("Jeferson","problema exception");
             }
         }
     }
