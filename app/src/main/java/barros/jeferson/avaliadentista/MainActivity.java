@@ -26,14 +26,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import barros.jeferson.avaliadentista.fragments.ConsultasFragment;
-import barros.jeferson.avaliadentista.fragments.MapFragment;
+import barros.jeferson.avaliadentista.fragments.MapsFragment;
 import barros.jeferson.avaliadentista.fragments.PerfilFragment;
 import barros.jeferson.avaliadentista.model.UnidadeSaude;
 
 
 public class MainActivity extends AppCompatActivity{
 
-    Fragment fragmentMap = new MapFragment();
+    Fragment fragmentMap = new MapsFragment();
     Fragment fragmentConsultas = new ConsultasFragment();
     Fragment fragmentPerfil = new PerfilFragment();
 

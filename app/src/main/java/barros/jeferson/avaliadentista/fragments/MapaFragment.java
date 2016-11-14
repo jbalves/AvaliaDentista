@@ -21,7 +21,7 @@ import barros.jeferson.avaliadentista.R;
  * Created by jbalves on 11/4/16.
  */
 
-public class MapFragment extends Fragment{
+public class MapaFragment extends Fragment{
     WebView mWebView;
 
     @Nullable
