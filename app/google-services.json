@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "532742352992",
-    "firebase_url": "https://avalia-dentista.firebaseio.com",
-    "project_id": "avalia-dentista",
-    "storage_bucket": "avalia-dentista.appspot.com"
+    "project_number": "295042310380",
+    "firebase_url": "https://avalia-dentista-01.firebaseio.com",
+    "project_id": "avalia-dentista-01",
+    "storage_bucket": "avalia-dentista-01.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:532742352992:android:f292cdf6cfd0e885",
+        "mobilesdk_app_id": "1:295042310380:android:f292cdf6cfd0e885",
         "android_client_info": {
           "package_name": "barros.jeferson.avaliadentista"
         }
       },
       "oauth_client": [
         {
-          "client_id": "532742352992-od0kq8cr61skn3eat8kg3ur15nkcct30.apps.googleusercontent.com",
+          "client_id": "295042310380-4ctuto86ctg2bhplci5bd7pc3san74f5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDWU_uyxJ1Z6y5Q2d2e96vXiMGL5qp9-i0"
+          "current_key": "AIzaSyAIg-psSN7o7fWFM7sdnf9V0dT8GGK_SHM"
         }
       ],
       "services": {

@@ -11,7 +11,6 @@
 
 
         <Button
-            android:id="@+id/addAgendamento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/pick_date"
@@ -56,6 +55,7 @@
             android:layout_marginTop="10dp">
 
             <RatingBar
+                android:id="@+id/ratingBar"
                 style="?android:attr/ratingBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,6 +78,7 @@
         android:layout_height="wrap_content"
         android:text="SALVAR"
         android:textColor="@android:color/white"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:onClick="salvarConsulta"/>
 
 </RelativeLayout>

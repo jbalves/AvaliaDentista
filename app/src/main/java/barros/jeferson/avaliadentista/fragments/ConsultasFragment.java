@@ -12,6 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.oceanbrasil.libocean.Ocean;
 import com.oceanbrasil.libocean.control.http.Request;
@@ -23,7 +28,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import barros.jeferson.avaliadentista.R;
+import barros.jeferson.avaliadentista.adapter.AgendamentoAdapter;
 import barros.jeferson.avaliadentista.adapter.MyAdapter;
+import barros.jeferson.avaliadentista.model.Agendamento;
 import barros.jeferson.avaliadentista.model.UnidadeSaude;
 
 /**
@@ -33,26 +40,26 @@ import barros.jeferson.avaliadentista.model.UnidadeSaude;
 public class ConsultasFragment extends Fragment implements Request.RequestListener {
 
     private View mView;
-
-    private ArrayList<UnidadeSaude> mLista = new ArrayList<>();
+    private DatabaseReference mDatabase;
+    private ArrayList<Agendamento> mLista = new ArrayList<>();
+    private static final String AGENDAMENTO_DATASET = "agendamentos";
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.consultas_fragment);
+
         return inflater.inflate(R.layout.fragment_consultas,container, false);
     }
-
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         mView = view;
-
-        Ocean
-                .newRequest("http://mobile-aceite.tcu.gov.br:80/mapa-da-saude/rest/estabelecimentos?categoria=POSTO DE SAÚDE&quantidade=30",this).get().send();
+        mDatabase = FirebaseDatabase.getInstance().getReference("agendamentos");
+        getAgendamentos();
     }
 
     @Override
@@ -81,7 +88,7 @@ public class ConsultasFragment extends Fragment implements Request.RequestListen
                     unidadeSaude.setDiasEspera(10);
                     unidadeSaude.setRating((float)3.0);
 
-                    mLista.add(unidadeSaude);
+                    //mLista.add(unidadeSaude);
                 }
 
             } catch (JSONException e) {
@@ -90,10 +97,46 @@ public class ConsultasFragment extends Fragment implements Request.RequestListen
         }
     }
 
-    private void criarAdapter(View view, ArrayList<UnidadeSaude> lista) {
-        MyAdapter adapter = new MyAdapter(view.getContext(), lista);
+    private void criarAdapter(View view, ArrayList<Agendamento> lista) {
+        Log.d("Jeferson","criarAdapter(): size lista" + lista.size());
+
+        AgendamentoAdapter adapter = new AgendamentoAdapter(view.getContext(), lista);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.lista_consulta_recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
+
+
+    public void getAgendamentos(){
+
+        //Connect to database
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(AGENDAMENTO_DATASET);
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                if (!dataSnapshot.exists() || dataSnapshot.getValue() == null){
+                    Log.e("Jeferson","Failed to read value");
+                }
+                Log.e("Jeferson","Size: " + dataSnapshot.getChildrenCount());
+
+                for (DataSnapshot dataSnap : dataSnapshot.getChildren()){
+                    Agendamento agendamento = dataSnap.getValue(Agendamento.class);
+                    mLista.add(agendamento);
+                }
+
+                criarAdapter(mView, mLista);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                //Failed to read value
+                Log.w("Jeferson","Failed to read value.",error.toException());
+            }
+        });
+    }
+
 }

@@ -29,6 +29,8 @@ dependencies {
     compile 'com.android.support:cardview-v7:25.0.0'
     compile 'com.github.oceanbrasil:OceanLib:1.1.4'
     compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.google.firebase:firebase-database:9.8.0'
+    compile 'com.google.firebase:firebase-storage:9.8.0'
     compile 'com.google.firebase:firebase-auth:9.8.0'
     compile 'com.google.android.gms:play-services-auth:9.8.0'
     compile 'com.google.android.gms:play-services:9.8.0'
