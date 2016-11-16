@@ -98,8 +98,6 @@ public class ConsultasFragment extends Fragment implements Request.RequestListen
     }
 
     private void criarAdapter(View view, ArrayList<Agendamento> lista) {
-        Log.d("Jeferson","criarAdapter(): size lista" + lista.size());
-
         AgendamentoAdapter adapter = new AgendamentoAdapter(view.getContext(), lista);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.lista_consulta_recyclerview);
         recyclerView.setAdapter(adapter);
@@ -119,10 +117,7 @@ public class ConsultasFragment extends Fragment implements Request.RequestListen
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 if (!dataSnapshot.exists() || dataSnapshot.getValue() == null){
-                    Log.e("Jeferson","Failed to read value");
                 }
-                Log.e("Jeferson","Size: " + dataSnapshot.getChildrenCount());
-
                 for (DataSnapshot dataSnap : dataSnapshot.getChildren()){
                     Agendamento agendamento = dataSnap.getValue(Agendamento.class);
                     mLista.add(agendamento);
@@ -134,7 +129,6 @@ public class ConsultasFragment extends Fragment implements Request.RequestListen
             @Override
             public void onCancelled(DatabaseError error) {
                 //Failed to read value
-                Log.w("Jeferson","Failed to read value.",error.toException());
             }
         });
     }
