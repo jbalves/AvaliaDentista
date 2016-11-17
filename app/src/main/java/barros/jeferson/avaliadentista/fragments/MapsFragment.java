@@ -70,10 +70,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-
-
-        // Add a marker in Sydney and move the camera
+        // Add a marker in Manaus and move the camera
         LatLng manaus = new LatLng(-3.10719,-60.0261);
         mMap.addMarker(new MarkerOptions().position(manaus).title("Marker in Manaus"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(manaus,14));

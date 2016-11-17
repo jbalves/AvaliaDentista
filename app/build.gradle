@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // Enabling multidex support.
         multiDexEnabled true
     }
     buildTypes {
@@ -31,11 +32,11 @@ dependencies {
     compile 'com.github.oceanbrasil:OceanLib:1.1.4'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.google.firebase:firebase-database:9.8.0'
-    compile 'com.google.firebase:firebase-storage:9.8.0'
     compile 'com.google.firebase:firebase-auth:9.8.0'
     compile 'com.google.android.gms:play-services-auth:9.8.0'
     compile 'com.google.android.gms:play-services:9.8.0'
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support:multidex:1.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
