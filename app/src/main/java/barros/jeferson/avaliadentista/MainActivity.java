@@ -3,6 +3,8 @@ package barros.jeferson.avaliadentista;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -39,8 +41,26 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        String appVer = "1.0";
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String lastAppVer = preferences.getString("lastAppVer","true");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(lastAppVer == ""){
+            // A aplicação foi instalada pela primeira vez
+            // Exibir tela
+           // setContentView(R.layout.activity_tutorial);
+
+        }
+        else if(lastAppVer != appVer){
+            // A aplicação foi actualizada
+            // Exibir tela
+           //setContentView(R.layout.activity_main);
+        }
+
 
         addFragment(fragmentMap);
 
