@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.oceanbrasil.libocean.Ocean;
 import com.oceanbrasil.libocean.control.http.Request;
@@ -42,25 +43,21 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        String appVer = "1.0";
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String lastAppVer = preferences.getString("lastAppVer","true");
+        Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .getBoolean("isFirstRun", true);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(lastAppVer == ""){
-            // A aplicação foi instalada pela primeira vez
-            // Exibir tela
-           // setContentView(R.layout.activity_tutorial);
-
-        }
-        else if(lastAppVer != appVer){
-            // A aplicação foi actualizada
-            // Exibir tela
-           //setContentView(R.layout.activity_main);
+        if (isFirstRun) {
+            //show start activity
+            startActivity(new Intent(MainActivity.this, TutorialActivity.class));
+            Toast.makeText(MainActivity.this, "First Run", Toast.LENGTH_LONG)
+                    .show();
         }
 
+        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                .putBoolean("isFirstRun", true).commit();
 
         addFragment(fragmentMap);
 
