@@ -7,4 +7,4 @@ O aplicativo "Avalia Dentista" tem por objetivo entregar ao cidadão informaçõ
 
 De posse destas informações os usuários poderão avaliar e escolher unidades de saúde bucal com melhor qualidade.
 
-![alt tag](https://github.com/jbalves/AvaliaDentista/blob/master/app/src/main/res/drawable/screenshot01.png)
+![Screenshot](https://github.com/jbalves/AvaliaDentista/blob/master/app/src/main/res/drawable/screenshot01.png)
