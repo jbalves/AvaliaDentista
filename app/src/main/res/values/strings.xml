@@ -6,4 +6,10 @@
     <string name="text_perfil">Perfil</string>
     <string name="pick_date">DATA DO AGENDAMENTO</string>
     <string name="title_activity_maps_fragment">Map</string>
+    <string name="google_status_fmt">Google User: %s</string>
+    <string name="firebase_status_fmt">Firebase User: %s</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="loading">Loading…</string>
 </resources>

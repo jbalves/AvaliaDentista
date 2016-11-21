@@ -41,6 +41,7 @@ public class ConsultasFragment extends Fragment implements Request.RequestListen
 
     private View mView;
     private DatabaseReference mDatabase;
+
     private ArrayList<Agendamento> mLista = new ArrayList<>();
     private static final String AGENDAMENTO_DATASET = "agendamentos";
 
