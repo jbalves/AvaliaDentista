@@ -91,7 +91,7 @@ public class PerfilFragment extends Fragment implements
         // [END config_signin]
 
         mGoogleApiClient = new GoogleApiClient.Builder(mView.getContext())
-                .enableAutoManage((FragmentActivity) mView.getContext() /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                //.enableAutoManage((FragmentActivity) mView.getContext() /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
