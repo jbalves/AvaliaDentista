@@ -7,7 +7,7 @@ import android.location.LocationManager;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -15,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -39,7 +41,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         return inflater.inflate(R.layout.fragment_maps, container, false);
     }
 
@@ -54,7 +55,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
         Ocean
                 .newRequest("http://mobile-aceite.tcu.gov.br:80/mapa-da-saude/rest/estabelecimentos?municipio=manaus&uf=am&campos=nomeFantasia,lat,long", this).get().send();
 
-        SupportMapFragment fragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        MapFragment fragment = (MapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         fragment.getMapAsync(this);
     }
 
@@ -73,7 +74,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
         // Add a marker in Manaus and move the camera
         LatLng manaus = new LatLng(-3.10719, -60.0261);
         mMap.addMarker(new MarkerOptions().position(manaus).title("Marker in Manaus"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(manaus, 14));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(manaus, 14));
 
 
         if (ActivityCompat.checkSelfPermission(mView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||

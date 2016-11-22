@@ -6,8 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 import android.support.annotation.NonNull;
@@ -36,8 +37,10 @@ import barros.jeferson.avaliadentista.model.UnidadeSaude;
 
 public class MainActivity extends AppCompatActivity{
 
-    Fragment fragmentMap = new MapsFragment();
-    Fragment fragmentConsultas = new ConsultasFragment();
+    FragmentManager mFragmentManager = getFragmentManager();
+
+    //Fragment fragmentMap = new MapsFragment();
+    //Fragment fragmentConsultas = new ConsultasFragment();
     Fragment fragmentPerfil = new PerfilFragment();
 
     @Override
@@ -59,13 +62,17 @@ public class MainActivity extends AppCompatActivity{
         getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
                 .putBoolean("isFirstRun", true).commit();
 
-        addFragment(fragmentMap);
+        //addFragment(fragmentMap);
+        mFragmentManager.beginTransaction().replace(R.id.layout_fragments, new MapsFragment()).commit();
+
 
         setBottomNavigation();
     }
 
 
     private void setBottomNavigation() {
+
+
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
@@ -76,15 +83,19 @@ public class MainActivity extends AppCompatActivity{
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.action_map:
-                                replaceFragment(fragmentMap);
+                                //replaceFragment(fragmentMap);
+
+                                mFragmentManager.beginTransaction().replace(R.id.layout_fragments, new MapsFragment()).commit();
                                 break;
 
                             case R.id.action_consultas:
-                                replaceFragment(fragmentConsultas);
+                                //replaceFragment(fragmentConsultas);
+                                mFragmentManager.beginTransaction().replace(R.id.layout_fragments, new ConsultasFragment()).commit();
                                 break;
 
                             case R.id.action_perfil:
-                                replaceFragment(fragmentPerfil);
+                                //replaceFragment(fragmentPerfil);
+                                mFragmentManager.beginTransaction().replace(R.id.layout_fragments, new PerfilFragment()).commit();
                                 break;
                         }
                         return false;
@@ -96,7 +107,7 @@ public class MainActivity extends AppCompatActivity{
     private void addFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        transaction.add(R.id.layout_fragments, fragment);
+        //transaction.add(R.id.layout_fragments, fragment);
         transaction.addToBackStack(null);
 
         transaction.commit();
@@ -104,7 +115,7 @@ public class MainActivity extends AppCompatActivity{
 
     private void replaceFragment(Fragment fragment) {
         FragmentTransaction  transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.layout_fragments, fragment);
+        //transaction.replace(R.id.layout_fragments, fragment);
         //transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.addToBackStack(null);
         transaction.commit();
