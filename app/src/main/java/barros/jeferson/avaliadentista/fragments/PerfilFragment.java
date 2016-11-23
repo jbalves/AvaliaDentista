@@ -91,7 +91,7 @@ public class PerfilFragment extends Fragment implements
         // [END config_signin]
 
         mGoogleApiClient = new GoogleApiClient.Builder(mView.getContext())
-                //.enableAutoManage((FragmentActivity) mView.getContext() /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                //.enableAutoManage((FragmentActivity) this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
@@ -153,6 +153,7 @@ public class PerfilFragment extends Fragment implements
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+        mGoogleApiClient.connect();
     }
     // [END on_start_add_listener]
 
@@ -163,6 +164,7 @@ public class PerfilFragment extends Fragment implements
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
         }
+        mGoogleApiClient.disconnect();
     }
     // [END on_stop_remove_listener]
 
