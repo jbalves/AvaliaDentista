@@ -24,6 +24,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 import barros.jeferson.avaliadentista.R;
 import barros.jeferson.avaliadentista.model.UnidadeSaude;
 
-public class MapsFragment extends Fragment implements OnMapReadyCallback, Request.RequestListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MapsFragment extends Fragment implements OnMapReadyCallback, Request.RequestListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnInfoWindowClickListener, GoogleMap.OnMarkerClickListener {
 
     private static final int LOCATION_REQUEST_CODE = 1;
     private View mView;
@@ -95,8 +96,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-
         // Add a marker in Manaus and move the camera
         //LatLng manaus = new LatLng(-3.10719, -60.0261);
         //mMap.addMarker(new MarkerOptions().position(manaus).title("Marker in Manaus"));
@@ -105,6 +104,12 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
+
+        //mMap.setInfoWindowAdapter(new MyAdapterMap(this));
+
+        mMap.setOnInfoWindowClickListener(this);
+
+        mMap.setOnMarkerClickListener(this);
 
 
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -175,7 +180,14 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
 
                     if (mMap == null) continue;
 
-                    Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(nomeFantasia));
+                    Marker marker = mMap
+                            .addMarker(new MarkerOptions()
+                                    .position(new LatLng(latitude, longitude))
+                                    .title(nomeFantasia)
+                                    .snippet("Unidade Saúde Bucal")
+                                    //.icon(BitmapDescriptorFactory.fromResource());
+                                    //.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                                    .icon(BitmapDescriptorFactory.defaultMarker(205.0F)));
                 }
 
             } catch (JSONException e) {
@@ -224,6 +236,8 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
                 //mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
                 mPosition = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mPosition, 14));
+                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mPosition, 14));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mPosition, 14));
             }
         }
 
@@ -239,4 +253,33 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Log.d("Jeferson","Janela Marcador clicado: " + marker.getTitle());
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Log.d("Jeferson","Marcador clicado: " + marker.getPosition());
+        return false;
+    }
+//
+//    private class MyAdapterMap implements GoogleMap.InfoWindowAdapter {
+//        private final View view;
+//
+//        public MyAdapterMap(MapsFragment mapsFragment) {
+//            return null;
+//        }
+//
+//        @Override
+//        public View getInfoWindow(Marker marker) {
+//            return null;
+//        }
+//
+//        @Override
+//        public View getInfoContents(Marker marker) {
+//            return null;
+//        }
+//    }
 }
