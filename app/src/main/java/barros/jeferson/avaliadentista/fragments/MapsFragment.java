@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,12 +39,15 @@ import java.util.ArrayList;
 import barros.jeferson.avaliadentista.R;
 import barros.jeferson.avaliadentista.model.UnidadeSaude;
 
-public class MapsFragment extends Fragment implements OnMapReadyCallback, Request.RequestListener {
+public class MapsFragment extends Fragment implements OnMapReadyCallback, Request.RequestListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final int LOCATION_REQUEST_CODE = 1;
     private View mView;
     private GoogleMap mMap;
-    private LatLng myPosition;
+    private Location mLastLocation;
+    private LatLng mPosition;
+
+    private GoogleApiClient mGoogleApiClient;
 
     @Nullable
     @Override
@@ -55,6 +60,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
         super.onViewCreated(view, savedInstanceState);
 
         mView = view;
+        setupMap();
         //Ocean
         //        .newRequest("http://mobile-aceite.tcu.gov.br:80/mapa-da-saude/rest/estabelecimentos?campos=nomeFantasia,lat,long&quantidade=20", this).get().send();
 
@@ -63,6 +69,18 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
 
         MapFragment fragment = (MapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         fragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onStart() {
+        mGoogleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        mGoogleApiClient.disconnect();
+        super.onStop();
     }
 
     /**
@@ -77,15 +95,16 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+
         // Add a marker in Manaus and move the camera
-        LatLng manaus = new LatLng(-3.10719, -60.0261);
-        mMap.addMarker(new MarkerOptions().position(manaus).title("Marker in Manaus"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(manaus, 14));
+        //LatLng manaus = new LatLng(-3.10719, -60.0261);
+        //mMap.addMarker(new MarkerOptions().position(manaus).title("Marker in Manaus"));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(manaus, 14));
 
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
-
 
 
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -106,7 +125,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         LOCATION_REQUEST_CODE);
             }
-        }else{
+        } else {
             Log.d("Label", "Ativando a localizacao");
             mMap.setMyLocationEnabled(true);
         }
@@ -133,7 +152,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
     }
 
 
-
     @Override
     public void onRequestOk(String resposta, JSONObject jsonObject, int code) {
         if (code == Request.NENHUM_ERROR) {
@@ -155,9 +173,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
                     double latitude = unidade.getDouble("lat");
                     double longitude = unidade.getDouble("long");
 
-                    if(mMap == null) continue;
+                    if (mMap == null) continue;
 
-                    Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(latitude,longitude)).title(nomeFantasia));
+                    Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(nomeFantasia));
                 }
 
             } catch (JSONException e) {
@@ -166,4 +184,59 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
         }
     }
 
+    private void setupMap() {
+        // Create an instance of GoogleAPIClient.
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // Mostrar diálogo explicativo
+            } else {
+                // Solicitar permissao
+                ActivityCompat.requestPermissions(
+                        getActivity(),
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        LOCATION_REQUEST_CODE);
+            }
+        }else {
+            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                    mGoogleApiClient);
+
+            if (mLastLocation != null) {
+                //mLatitudeText.setText(String.valueOf(mLastLocation.getLatitude()));
+                //mLongitudeText.setText(String.valueOf(mLastLocation.getLongitude()));
+                mPosition = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mPosition, 14));
+            }
+        }
+
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
 }
