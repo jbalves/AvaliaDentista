@@ -61,8 +61,8 @@ public class PerfilFragment extends Fragment implements
     // [END declare_auth_listener]
 
     private GoogleApiClient mGoogleApiClient;
-    private TextView mStatusTextView;
-    private TextView mDetailTextView;
+    //private TextView mStatusTextView;
+    //private TextView mDetailTextView;
 
     public ProgressDialog mProgressDialog;
 
@@ -74,8 +74,8 @@ public class PerfilFragment extends Fragment implements
         mView = inflater.inflate(R.layout.fragment_perfil, container, false);
 
         // Views
-        mStatusTextView = (TextView) mView.findViewById(R.id.status);
-        mDetailTextView = (TextView) mView.findViewById(R.id.detail);
+        //mStatusTextView = (TextView) mView.findViewById(R.id.status);
+        //mDetailTextView = (TextView) mView.findViewById(R.id.detail);
 
         // Button listeners
         mView.findViewById(R.id.sign_in_button).setOnClickListener(this);
@@ -127,15 +127,15 @@ public class PerfilFragment extends Fragment implements
 
         if (user != null) {
 
-            mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
-            mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
+            //mStatusTextView.setText(getString(R.string.google_status_fmt, user.getEmail()));
+            //mDetailTextView.setText(getString(R.string.firebase_status_fmt, user.getUid()));
 
             mView.findViewById(R.id.sign_in_button).setVisibility(View.GONE);
             mView.findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
         } else {
 
-            mStatusTextView.setText(R.string.signed_out);
-            mDetailTextView.setText(null);
+            //mStatusTextView.setText(R.string.signed_out);
+            //mDetailTextView.setText(null);
 
             mView.findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
             mView.findViewById(R.id.sign_out_and_disconnect).setVisibility(View.GONE);
