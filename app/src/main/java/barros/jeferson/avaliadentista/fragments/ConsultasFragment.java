@@ -1,6 +1,9 @@
 package barros.jeferson.avaliadentista.fragments;
 
+import android.app.AlertDialog;
 import android.content.ClipData;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
@@ -11,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,7 +24,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import barros.jeferson.avaliadentista.MainActivity;
 import barros.jeferson.avaliadentista.R;
+import barros.jeferson.avaliadentista.TutorialActivity;
 import barros.jeferson.avaliadentista.adapter.AgendamentoAdapter;
 import barros.jeferson.avaliadentista.adapter.MyAdapter;
 import barros.jeferson.avaliadentista.model.Agendamento;
@@ -63,7 +69,6 @@ public class ConsultasFragment extends Fragment {
     }
 
     public void getAgendamentos(){
-
         //Connect to database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(AGENDAMENTO_DATASET);
@@ -74,10 +79,21 @@ public class ConsultasFragment extends Fragment {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 if (!dataSnapshot.exists() || dataSnapshot.getValue() == null){
+
+                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                            .create();
+                    alertDialog.setCancelable(false);
+                    alertDialog.setTitle("Dados de agendamento");
+                    alertDialog.setMessage("Não foi possível coletar os dados");
+                    alertDialog.setCanceledOnTouchOutside(true);
+                    alertDialog.show();
+
+                    Log.e("Jeferson","Failed to read value");
                 }
                 for (DataSnapshot dataSnap : dataSnapshot.getChildren()){
                     Agendamento agendamento = dataSnap.getValue(Agendamento.class);
                     mLista.add(agendamento);
+                    Log.e("Jeferson","Agendamento(uid): " + agendamento.getUid());
                 }
 
                 criarAdapter(mView, mLista);

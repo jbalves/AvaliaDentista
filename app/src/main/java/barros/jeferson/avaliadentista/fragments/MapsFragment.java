@@ -264,22 +264,4 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
         Log.d("Jeferson","Marcador clicado: " + marker.getPosition());
         return false;
     }
-//
-//    private class MyAdapterMap implements GoogleMap.InfoWindowAdapter {
-//        private final View view;
-//
-//        public MyAdapterMap(MapsFragment mapsFragment) {
-//            return null;
-//        }
-//
-//        @Override
-//        public View getInfoWindow(Marker marker) {
-//            return null;
-//        }
-//
-//        @Override
-//        public View getInfoContents(Marker marker) {
-//            return null;
-//        }
-//    }
 }
