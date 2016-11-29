@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
@@ -68,8 +69,14 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
         Ocean
                 .newRequest("http://mobile-aceite.tcu.gov.br:80/mapa-da-saude/rest/estabelecimentos?municipio=manaus&uf=am&campos=nomeFantasia,lat,long", this).get().send();
 
-        MapFragment fragment = (MapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        fragment.getMapAsync(this);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            MapFragment fragment = (MapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+            fragment.getMapAsync(this);
+        } else {
+            MapFragment fragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+            fragment.getMapAsync(this);
+        }
+
     }
 
     @Override
