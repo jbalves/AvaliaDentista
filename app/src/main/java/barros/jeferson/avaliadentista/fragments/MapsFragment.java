@@ -69,7 +69,10 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
         Ocean
                 .newRequest("http://mobile-aceite.tcu.gov.br:80/mapa-da-saude/rest/estabelecimentos?municipio=manaus&uf=am&campos=nomeFantasia,lat,long", this).get().send();
 
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            MapFragment fragment = (MapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+//            fragment.getMapAsync(this);
             MapFragment fragment = (MapFragment) getChildFragmentManager().findFragmentById(R.id.map);
             fragment.getMapAsync(this);
         } else {
