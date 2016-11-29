@@ -1,6 +1,7 @@
 package barros.jeferson.avaliadentista;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -69,13 +72,22 @@ public class CadastroConsultaActivity extends AppCompatActivity {
 
         Agendamento agendamento = new Agendamento();
 
-        agendamento.setUnidadeSaude("UBS Morro da Liberdade");
-        agendamento.setDataAgendamento((String) mDataDoAgendamento.getText());
-        agendamento.setDataConsulta((String) mDataDaConsulta.getText());
-        agendamento.setDataRetorno((String) mDataDoRetorno.getText());
-        agendamento.setRating(mRatingBar.getRating());
+        //Get current user
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // User is signed in
+            agendamento.setUnidadeSaude("UBS Morro da Liberdade");
+            agendamento.setDataAgendamento((String) mDataDoAgendamento.getText());
+            agendamento.setDataConsulta((String) mDataDaConsulta.getText());
+            agendamento.setDataRetorno((String) mDataDoRetorno.getText());
+            agendamento.setRating(mRatingBar.getRating());
+            agendamento.setUid(user.getUid());
+            agendamento.setEmail(user.getEmail());
+            mDatabase.push().setValue(agendamento);
+        } else {
+            // No user is signed in
+        }
 
-        mDatabase.push().setValue(agendamento);
 
         finish();
     }
