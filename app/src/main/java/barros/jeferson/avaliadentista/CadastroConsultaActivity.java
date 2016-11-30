@@ -36,6 +36,7 @@ public class CadastroConsultaActivity extends AppCompatActivity {
     private RatingBar mRatingBar;
 
     private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,7 @@ public class CadastroConsultaActivity extends AppCompatActivity {
     public void salvarConsulta(View view) {
         // Write a message to the database
         mDatabase = FirebaseDatabase.getInstance().getReference("agendamentos");
+        mDatabaseUser = FirebaseDatabase.getInstance().getReference("usuarios");
 
         Agendamento agendamento = new Agendamento();
 
@@ -83,9 +85,12 @@ public class CadastroConsultaActivity extends AppCompatActivity {
             agendamento.setRating(mRatingBar.getRating());
             agendamento.setUid(user.getUid());
             agendamento.setEmail(user.getEmail());
-            mDatabase.push().setValue(agendamento);
+            String key = mDatabase.push().getKey();
+            mDatabase.child(key).setValue(agendamento);
+            mDatabaseUser.push().child(user.getUid()).setValue(key);
         } else {
             // No user is signed in
+
         }
 
 

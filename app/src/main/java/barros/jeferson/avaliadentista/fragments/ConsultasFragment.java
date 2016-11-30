@@ -16,10 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -43,6 +46,8 @@ public class ConsultasFragment extends Fragment {
     private ArrayList<Agendamento> mLista = new ArrayList<>();
     private static final String AGENDAMENTO_DATASET = "agendamentos";
 
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,7 +62,7 @@ public class ConsultasFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mView = view;
-        mDatabase = FirebaseDatabase.getInstance().getReference("agendamentos");
+        mDatabase = FirebaseDatabase.getInstance().getReference(AGENDAMENTO_DATASET);
         getAgendamentos();
     }
 
@@ -71,7 +76,7 @@ public class ConsultasFragment extends Fragment {
     public void getAgendamentos(){
         //Connect to database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference(AGENDAMENTO_DATASET);
+        final DatabaseReference myRef = database.getReference(AGENDAMENTO_DATASET);
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -80,13 +85,13 @@ public class ConsultasFragment extends Fragment {
                 // whenever data at this location is updated.
                 if (!dataSnapshot.exists() || dataSnapshot.getValue() == null){
 
-                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-                            .create();
-                    alertDialog.setCancelable(false);
-                    alertDialog.setTitle("Dados de agendamento");
-                    alertDialog.setMessage("Não foi possível coletar os dados");
-                    alertDialog.setCanceledOnTouchOutside(true);
-                    alertDialog.show();
+//                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+//                            .create();
+//                    alertDialog.setCancelable(false);
+//                    alertDialog.setTitle("Dados de agendamento");
+//                    alertDialog.setMessage("Não foi possível coletar os dados");
+//                    alertDialog.setCanceledOnTouchOutside(true);
+//                    alertDialog.show();
 
                     Log.e("Jeferson","Failed to read value");
                 }

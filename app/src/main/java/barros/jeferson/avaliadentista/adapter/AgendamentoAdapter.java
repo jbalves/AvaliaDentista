@@ -47,7 +47,9 @@ public class AgendamentoAdapter extends RecyclerView.Adapter<AgendamentoAdapter.
                 .setNomeUnidade(agendamento.getUnidadeSaude())
                 .setDataAtendimento(agendamento.getDataAgendamento())
                 .setDiasEspera(10)
-                .setRating(agendamento.getRating());
+                .setRating(agendamento.getRating())
+                .setUid(agendamento.getUid())
+                .setEmail(agendamento.getEmail());
     }
     //#4 conta a quantidade de elementos existente na lista
     @Override
@@ -101,6 +103,17 @@ public class AgendamentoAdapter extends RecyclerView.Adapter<AgendamentoAdapter.
                     //.setText(ano+"");
             return this;
         }
+
+        public ViewHolder setUid(String uid) {
+
+            return this;
+        }
+
+        public ViewHolder setEmail(String email) {
+
+            return this;
+        }
+
 
     }
 
