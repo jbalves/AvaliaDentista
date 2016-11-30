@@ -1,6 +1,7 @@
 package barros.jeferson.avaliadentista.fragments;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -120,6 +122,9 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
         mMap.setOnInfoWindowClickListener(this);
 
         mMap.setOnMarkerClickListener(this);
+
+        // Personalizar a janela de informacoes do marcador
+        googleMap.setInfoWindowAdapter(new MyAdapterMarker(getActivity()));
 
 
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -273,5 +278,29 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback, Reques
     public boolean onMarkerClick(Marker marker) {
         Log.d("Jeferson","Marcador clicado: " + marker.getPosition());
         return false;
+    }
+
+    // Adapter personalizado para as informacoes no marcador
+    class MyAdapterMarker implements GoogleMap.InfoWindowAdapter{
+
+        private final View view;
+
+        public MyAdapterMarker(Activity context){
+            // Cria o layout personalizado para o marcador
+            view = context.getLayoutInflater().inflate(R.layout.info_map, null);
+        }
+
+        @Override
+        public View getInfoWindow(Marker marker) {
+            return null;
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+            // Recupera a view do nome no layout
+            TextView vName = (TextView) view.findViewById(R.id.name);
+            vName.setText(marker.getTitle());
+            return view;
+        }
     }
 }
