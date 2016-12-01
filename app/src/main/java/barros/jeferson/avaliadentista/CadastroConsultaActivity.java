@@ -76,6 +76,7 @@ public class CadastroConsultaActivity extends AppCompatActivity {
 
         //Get current user
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         if (user != null) {
             // User is signed in
             agendamento.setUnidadeSaude("UBS Morro da Liberdade");
@@ -85,14 +86,14 @@ public class CadastroConsultaActivity extends AppCompatActivity {
             agendamento.setRating(mRatingBar.getRating());
             agendamento.setUid(user.getUid());
             agendamento.setEmail(user.getEmail());
+
             String key = mDatabase.push().getKey();
+
             mDatabase.child(key).setValue(agendamento);
             mDatabaseUser.push().child(user.getUid()).setValue(key);
         } else {
             // No user is signed in
-
         }
-
 
         finish();
     }

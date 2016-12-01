@@ -10,6 +10,7 @@ import android.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,6 +28,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import barros.jeferson.avaliadentista.MainActivity;
 import barros.jeferson.avaliadentista.R;
@@ -45,8 +48,10 @@ public class ConsultasFragment extends Fragment {
 
     private ArrayList<Agendamento> mLista = new ArrayList<>();
     private static final String AGENDAMENTO_DATASET = "agendamentos";
+    private static final String USUARIOS_DATASET = "usuarios";
+    private FirebaseUser mUser;
 
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private AgendamentoAdapter mAdapter;
 
     @Nullable
     @Override
@@ -62,21 +67,43 @@ public class ConsultasFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mView = view;
+
         mDatabase = FirebaseDatabase.getInstance().getReference(AGENDAMENTO_DATASET);
-        getAgendamentos();
+
+        //Get current user
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(mUser == null) {
+            AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
+                    .create();
+            alertDialog.setCancelable(false);
+            alertDialog.setTitle("Histórico de Agendamentos");
+            alertDialog.setMessage("Por favor, faça login em Perfil");
+            alertDialog.setCanceledOnTouchOutside(true);
+            alertDialog.show();
+        } else {
+            getAgendamentos();
+        }
     }
 
     private void criarAdapter(View view, ArrayList<Agendamento> lista) {
-        AgendamentoAdapter adapter = new AgendamentoAdapter(view.getContext(), lista);
+        mAdapter = new AgendamentoAdapter(view.getContext(), lista);
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.lista_consulta_recyclerview);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(mAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
 
     public void getAgendamentos(){
-        //Connect to database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference(AGENDAMENTO_DATASET);
+
+        final DatabaseReference myRef = mDatabase;
+        //Get current user
+        //final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String user = null;
+
+        if (mUser != null) {
+            user = mUser.getUid();
+        }
+        final String finalUser = user;
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -85,20 +112,20 @@ public class ConsultasFragment extends Fragment {
                 // whenever data at this location is updated.
                 if (!dataSnapshot.exists() || dataSnapshot.getValue() == null){
 
-//                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-//                            .create();
-//                    alertDialog.setCancelable(false);
-//                    alertDialog.setTitle("Dados de agendamento");
-//                    alertDialog.setMessage("Não foi possível coletar os dados");
-//                    alertDialog.setCanceledOnTouchOutside(true);
-//                    alertDialog.show();
-
                     Log.e("Jeferson","Failed to read value");
                 }
+
                 for (DataSnapshot dataSnap : dataSnapshot.getChildren()){
                     Agendamento agendamento = dataSnap.getValue(Agendamento.class);
-                    mLista.add(agendamento);
+
                     Log.e("Jeferson","Agendamento(uid): " + agendamento.getUid());
+                    Log.e("Jeferson","User(uid): " + finalUser);
+
+                    if (TextUtils.equals(agendamento.getUid(), finalUser)) {
+                        mLista.add(agendamento);
+                    }
+
+                    //mLista.add(agendamento);
                 }
 
                 criarAdapter(mView, mLista);
